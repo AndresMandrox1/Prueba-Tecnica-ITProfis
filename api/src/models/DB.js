@@ -122,6 +122,7 @@ const Viaje = db.define(
 Camion.belongsToMany(Personal, { through: Viaje });
 Personal.belongsToMany(Camion, { through: Viaje });
 Usuario.hasMany(Viaje);
+Viaje.belongsTo(Usuario)
 
 module.exports = {
   Usuario,

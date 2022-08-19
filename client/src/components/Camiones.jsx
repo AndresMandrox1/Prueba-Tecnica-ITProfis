@@ -1,5 +1,5 @@
 import { useState } from "react";
-
+import axios from "axios";
 export const Camiones = () => {
   const [form, setForm] = useState({
     placa: "",
@@ -12,52 +12,77 @@ export const Camiones = () => {
 
   const { placa, consumo, capacidad, ubicacion, tipo, depresiacion } = form;
 
-  const handleChange = ({ targer }) => {
-    const { name, value } = targer;
-
+  const handleChange = (e) => {
+    const { name, value } = e.target;
     setForm({ ...form, [name]: value });
+  };
+
+  const enviar = (e) => {
+    e.preventDefault();
+    axios
+      .post("http://localhost:3001/camion", {
+        placa: form.placa,
+        consumo: form.consumo,
+        capacidad: form.capacidad,
+        ubicacion: form.ubicacion,
+        tipo: form.tipo,
+        depresiacion: form.depresiacion,
+      })
+      .then(function (response) {
+        console.log(response);
+      });
+    setForm({
+      placa: "",
+      consumo: "",
+      capacidad: "",
+      ubicacion: "",
+      tipo: "",
+      depresiacion: "",
+    });
   };
 
   return (
     <div>
       <form>
-        <label htmlFor="Placa" />
-        <input type="text" name="placa" value={placa} onClick={handleChange} />
+        <label>Placa</label>
+        <input type="text" name="placa" value={placa} onChange={handleChange} />
 
-        <label htmlFor="Consumo" />
+        <label>Consumo</label>
         <input
           type="text"
           name="consumo"
           value={consumo}
-          onClick={handleChange}
+          onChange={handleChange}
         />
 
-        <label htmlFor="Capacidad" />
+        <label>Capacidad </label>
         <input
           type="text"
           name="capacidad"
           value={capacidad}
-          onClick={handleChange}
+          onChange={handleChange}
         />
 
-        <label htmlFor="Ubicacion" />
+        <label>Ubicacion</label>
         <input
           type="text"
           name="ubicacion"
           value={ubicacion}
-          onClick={handleChange}
+          onChange={handleChange}
         />
 
-        <label htmlFor="Tipo" />
-        <input type="text" name="tipo" value={tipo} onClick={handleChange} />
+        <label>Tipo</label>
+        <input type="text" name="tipo" value={tipo} onChange={handleChange} />
 
-        <label htmlFor="Depresiacion" />
+        <label>Depresiacion</label>
         <input
           type="text"
           name="depresiacion"
           value={depresiacion}
-          onClick={handleChange}
+          onChange={handleChange}
         />
+
+        <button onClick={enviar}>Enviar</button>
       </form>
     </div>
   );

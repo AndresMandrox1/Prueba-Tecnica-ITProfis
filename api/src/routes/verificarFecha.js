@@ -4,12 +4,24 @@ const { Viaje, Camion } = require("../models/DB");
 const fecha = Router();
 
 
-fecha.post("/", async (req, res) => {
+fecha.get("/", async (req, res) => {
   const { fecha } = req.body;
+  let camionesDisponibles = []
   let camiones = await Camion.findAll();
   let viajes = await Viaje.findAll({where:{fecha}});
-
+  let arr = []
+  viajes.map(e =>{
+    arr.push(e.camionePlaca);
+  })
+  camiones.map(e =>{
+    console.log(e.placa)
+    console.log(arr.includes(e.placa));
+    if(arr.includes(e.placa) === false){
+      camionesDisponibles.push(e.placa)
+    }
+  })
+  res.json(camionesDisponibles)
   
 });
 
-module.exports = transport;
+module.exports = fecha;
