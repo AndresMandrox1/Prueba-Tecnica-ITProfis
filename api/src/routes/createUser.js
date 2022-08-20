@@ -16,14 +16,13 @@ user.get("/", async (req, res) => {
   }
   else{
     let search = await Usuario.findAll()
-    console.log(search)
-    res.json("funciono")
+    res.json(search)
   }
 });
 
 user.post("/", async (req, res) => {
   const { nombre, nit, correo, telefono } = req.body;
-  let a = await Usuario.findOne({ where: { nombre} });
+  let a = await Usuario.findOne({ where: { nit} });
   if (!a) {
     try {
       let usuarioNuevo = await Usuario.create({

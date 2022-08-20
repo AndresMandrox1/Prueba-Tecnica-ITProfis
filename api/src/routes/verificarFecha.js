@@ -5,7 +5,7 @@ const fecha = Router();
 
 
 fecha.get("/", async (req, res) => {
-  const { fecha } = req.body;
+  const { fecha } = req.query;
   let camionesDisponibles = []
   let camiones = await Camion.findAll();
   let viajes = await Viaje.findAll({where:{fecha}});
@@ -14,7 +14,6 @@ fecha.get("/", async (req, res) => {
     arr.push(e.camionePlaca);
   })
   camiones.map(e =>{
-    console.log(e.placa)
     console.log(arr.includes(e.placa));
     if(arr.includes(e.placa) === false){
       camionesDisponibles.push(e.placa)
